@@ -6,6 +6,7 @@
 
 <script>
 import EventCard from '@/components/EventCard.vue'
+import axios from 'axios'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -15,35 +16,21 @@ export default {
   },
   data() {
     return {
-      events: [
-        {
-          id: 11101,
-          category: 'Promotion',
-          title: 'Portes ouvertes',
-          description: 'Présentation des activités de la filière au public.',
-          date: '25 novembre 2024',
-          time: '08:00',
-        },
-        {
-          id: 20201,
-          category: 'Loisir',
-          title: 'Journée ski',
-          description:
-            'Activité neige dans Ste-croix et à la station des Rasses pour du ski de fond, ski de descente et randonnée.',
-          date: '14 février',
-          time: '08:00',
-        },
-        {
-          id: 30901,
-          category: 'Loisir',
-          title: 'Semaine spéciale',
-          description:
-            "voyage à l' étranger avec des activités proposées par les élèves.",
-          date: '14 février',
-          time: '08:00',
-        },
-      ],
+      events: null,
     }
+  },
+  created() {
+    axios
+      .get(
+        'http://my-json-server.typicode.com/fandolfatto/VueAPIOptions/events'
+      )
+      .then((response) => {
+        console.log('events : ' + response.data)
+        this.events = response.data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
 }
 </script>
