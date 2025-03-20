@@ -3,6 +3,10 @@
     <h4>{{ event.title }}</h4>
     <span> {{ event.time }} le </span>
     <span> {{ event.date }} </span>
+    <div>
+      <button @click="Delete(event.id)">Supprimer</button>
+      <button>Modifier</button>
+    </div>
   </div>
 </template>
 
@@ -11,6 +15,11 @@ export default {
   name: 'EventCard',
   props: {
     events: Object,
+  },
+  methods: {
+    Delete(id) {
+      this.$emit('delete-event', id)
+    },
   },
 }
 </script>

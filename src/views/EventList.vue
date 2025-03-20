@@ -1,12 +1,12 @@
 <template>
   <div class="events">
-    <EventCard :events="events" />
+    <EventCard :events="events" @delete-event="DeleteEvent" />
   </div>
 </template>
 
 <script>
 import EventCard from '@/components/EventCard.vue'
-import axios from 'axios'
+import EventService from '../services/EventService.js'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -20,17 +20,24 @@ export default {
     }
   },
   created() {
-    axios
-      .get(
-        'http://my-json-server.typicode.com/fandolfatto/VueAPIOptions/events'
-      )
+    EventService.getEvents()
       .then((response) => {
-        console.log('events : ' + response.data)
         this.events = response.data
       })
       .catch((error) => {
         console.log(error)
       })
+  },
+  methods: {
+    DeleteEvent(id) {
+      EventService.delEvents(id)
+        .then(() => {
+          console.log(id + ' à été supp')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
   },
 }
 </script>
